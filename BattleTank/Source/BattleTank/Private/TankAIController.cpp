@@ -12,20 +12,14 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetPlayerTank())
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	if (PlayerTank)
 	{
-		GetAITank()->AimAt(GetPlayerTank()->GetActorLocation());
+		auto AITank = Cast<ATank>(GetPawn());
+
+		AITank->AimAt(PlayerTank->GetActorLocation());
+		AITank->Fire(); //TODO limit fire rate
 	}
-}
-
-ATank* ATankAIController::GetAITank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAIController::GetPlayerTank() const
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
 

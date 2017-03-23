@@ -12,6 +12,15 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
+
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+	auto TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
+
+	IntendMoveForward(FVector::DotProduct(AIForwardIntention, TankForwardDirection));
+	IntendTurnRight(FVector::CrossProduct(AIForwardIntention, TankForwardDirection).Z);
+}
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	if (!LeftTrack || !RightTrack)

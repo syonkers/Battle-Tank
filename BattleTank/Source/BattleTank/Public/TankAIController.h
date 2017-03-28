@@ -19,12 +19,13 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 	
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float AcceptanceRadius = 8000;
+
 private:
 	virtual void BeginPlay() override;
 
 	virtual void Tick (float DeltaTime) override;
-
-	float AcceptanceRadius = 3000;
 
 	APawn* PlayerTank = nullptr;
 
